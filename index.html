@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Coming Soon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: url('喜鹊.png') no-repeat center center fixed;
+      background-size: cover;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .coming-soon {
+      position: relative;
+      z-index: 2;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.6rem;
+      font-weight: normal;
+      letter-spacing: 2px;
+      text-align: center;
+      max-width: 90vw;
+      
+      /* 金色渐变效果 */
+      background: linear-gradient(
+        100deg,
+        #fffbe6 0%,
+        #fffacd 15%,
+        #ffe066 30%,
+        #ffd700 50%,
+        #ffcc00 70%,
+        #ffb300 85%,
+        #fff8dc 100%
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      
+      /* 多层发光阴影 */
+      text-shadow:
+        0 2px 8px rgba(255, 215, 0, 0.18),
+        0 1px 0 #fffbe6,
+        0 2px 4px #bfa046,
+        0 0 8px #fff9c4,
+        0 0 16px #fffde4,
+        0 0 2px #fff;
+      
+      /* 禁止文字选中 */
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      
+      animation: fadeInGently 2s ease-out;
+    }
+    
+    /* 副标题样式 */
+    .subtitle {
+      position: relative;
+      z-index: 2;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #6b5b47;
+      text-align: center;
+      margin-top: 20px;
+      font-style: italic;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+      animation: fadeInGently 2s ease-out 0.5s both;
+      /* 禁止文字选中 */
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    
+    @keyframes fadeInGently {
+      from { 
+        opacity: 0; 
+        transform: translateY(30px) scale(0.95);
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+      }
+    }
+    
+    /* 响应式设计 */
+    @media (max-width: 600px) {
+      .coming-soon {
+        font-size: 2.2rem;
+        max-width: 95vw;
+        letter-spacing: 1px;
+      }
+      .subtitle {
+        font-size: 0.9rem;
+        margin-top: 15px;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .coming-soon {
+        font-size: 1.8rem;
+      }
+      .subtitle {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="coming-soon" id="mainText">Coming Soon</div>
+    <div class="subtitle" id="subText">Something beautiful is approaching</div>
+  </div>
+
+  <script>
+    // 多语言配置
+    const translations = {
+      'zh': {
+        main: '即将到来',
+        sub: '美好的事物正在路上'
+      },
+      'zh-CN': {
+        main: '即将到来',
+        sub: '美好的事物正在路上'
+      },
+      'zh-TW': {
+        main: '即將到來',
+        sub: '美好的事物正在路上'
+      },
+      'en': {
+        main: 'Coming Soon',
+        sub: 'Something beautiful is approaching'
+      },
+      'en-US': {
+        main: 'Coming Soon',
+        sub: 'Something beautiful is approaching'
+      },
+      'en-GB': {
+        main: 'Coming Soon',
+        sub: 'Something beautiful is approaching'
+      },
+      'ja': {
+        main: 'まもなく',
+        sub: '美しいものが近づいています'
+      },
+      'ko': {
+        main: '곧 공개',
+        sub: '아름다운 것이 다가오고 있습니다'
+      },
+      'fr': {
+        main: 'Bientôt',
+        sub: 'Quelque chose de beau approche'
+      },
+      'de': {
+        main: 'Demnächst',
+        sub: 'Etwas Schönes nähert sich'
+      },
+      'es': {
+        main: 'Próximamente',
+        sub: 'Algo hermoso se acerca'
+      },
+      'ru': {
+        main: 'Скоро',
+        sub: 'Что-то прекрасное приближается'
+      }
+    };
+
+    // 获取浏览器语言设置
+    function detectLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      
+      // 优先匹配完整语言代码
+      if (translations[browserLang]) {
+        return browserLang;
+      }
+      
+      // 匹配语言前缀
+      const langPrefix = browserLang.split('-')[0];
+      if (translations[langPrefix]) {
+        return langPrefix;
+      }
+      
+      // 默认返回英语
+      return 'en';
+    }
+
+    // 应用翻译
+    function applyTranslation() {
+      const lang = detectLanguage();
+      const translation = translations[lang];
+      
+      document.getElementById('mainText').textContent = translation.main;
+      document.getElementById('subText').textContent = translation.sub;
+      
+      // 更新html lang属性
+      document.documentElement.lang = lang;
+      
+      // 调试信息
+      console.log('检测到语言:', lang);
+      console.log('应用翻译:', translation);
+    }
+
+    // 页面加载时应用翻译
+    document.addEventListener('DOMContentLoaded', applyTranslation);
+  </script>
+</body>
+</html>
